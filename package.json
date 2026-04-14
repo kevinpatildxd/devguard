@@ -4,7 +4,7 @@
   "description": "CLI tool that validates .env files against .env.example before your app ships",
   "main": "dist/index.js",
   "bin": {
-    "envguard": "./dist/index.js"
+    "envguard": "dist/index.js"
   },
   "files": [
     "dist"
@@ -28,7 +28,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kevinpatildxd/envguard.git"
+    "url": "git+https://github.com/kevinpatildxd/envguard.git"
   },
   "bugs": {
     "url": "https://github.com/kevinpatildxd/envguard/issues"
