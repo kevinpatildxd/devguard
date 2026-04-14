@@ -80,6 +80,6 @@ describe('reportMulti', () => {
     ]);
     const output = (console.log as ReturnType<typeof vi.spyOn>).mock.calls
       .map((c) => String(c[0])).join('\n');
-    expect(output).toContain('All env files passed');
+    expect(output).toContain('env file(s) passed');
   });
 });

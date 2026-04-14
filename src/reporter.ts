@@ -1,5 +1,13 @@
 import chalk from 'chalk';
 import { ValidationResult } from './types';
+import { ConsistencyIssue } from './consistency';
+
+const DIVIDER_LEN = 40;
+
+function divider(label: string): string {
+  const dashes = '─'.repeat(Math.max(0, DIVIDER_LEN - label.length));
+  return chalk.bold(`── ${label} ${dashes}`);
+}
 
 function printResults(results: ValidationResult[]): void {
   const errors = results.filter((r) => r.severity === 'error');
@@ -21,11 +29,9 @@ function printResults(results: ValidationResult[]): void {
 
   if (errors.length === 0 && warnings.length === 0) {
     console.log(chalk.green(`  ✔ All checks passed`));
-  }
-
-  if (errors.length > 0) {
+  } else if (errors.length > 0) {
     console.log(chalk.red.bold(`  ${errors.length} error(s) found. Fix before deploying.`));
-  } else if (warnings.length > 0) {
+  } else {
     console.log(chalk.yellow(`  ${warnings.length} warning(s). Review before deploying.`));
   }
 }
@@ -39,13 +45,13 @@ export function report(
     console.log(JSON.stringify(results, null, 2));
     return;
   }
-
-  console.log(chalk.bold(`\n── ${file} ${'─'.repeat(Math.max(0, 40 - file.length))}`));
+  console.log(divider(file));
   printResults(results);
 }
 
 export function reportMulti(
-  allResults: { file: string; results: ValidationResult[] }[]
+  allResults: { file: string; results: ValidationResult[] }[],
+  consistency: ConsistencyIssue[] = []
 ): void {
   const totalErrors = allResults.reduce(
     (sum, { results }) => sum + results.filter((r) => r.severity === 'error').length, 0
@@ -56,18 +62,37 @@ export function reportMulti(
 
   console.log(chalk.bold(`\nenvguard — found ${allResults.length} env file(s)\n`));
 
+  // per-file reports
   for (const { file, results } of allResults) {
-    console.log(chalk.bold(`── ${file} ${'─'.repeat(Math.max(0, 40 - file.length))}`));
+    console.log(divider(file));
     printResults(results);
     console.log();
   }
 
-  // summary line
-  if (totalErrors === 0 && totalWarnings === 0) {
-    console.log(chalk.green.bold('✔ All env files passed'));
-  } else if (totalErrors > 0) {
-    console.log(chalk.red.bold(`✗ ${totalErrors} error(s) across ${allResults.length} file(s). Fix before deploying.`));
+  // cross-env consistency
+  if (consistency.length > 0) {
+    console.log(chalk.cyan.bold(`── Cross-environment consistency ${'─'.repeat(6)}`));
+    for (const issue of consistency) {
+      console.log(
+        chalk.cyan(`  ⚡ ${issue.key} — present in [${issue.presentIn.join(', ')}] but missing in [${issue.missingIn.join(', ')}]`)
+      );
+    }
+    console.log();
+  }
+
+  // overall summary
+  const consistencyCount = consistency.length;
+  if (totalErrors === 0 && totalWarnings === 0 && consistencyCount === 0) {
+    console.log(chalk.green.bold(`✔ All ${allResults.length} env file(s) passed`));
   } else {
-    console.log(chalk.yellow(`⚠ ${totalWarnings} warning(s) across ${allResults.length} file(s).`));
+    if (totalErrors > 0) {
+      console.log(chalk.red.bold(`✗ ${totalErrors} error(s) across ${allResults.length} file(s)`));
+    }
+    if (totalWarnings > 0) {
+      console.log(chalk.yellow(`⚠ ${totalWarnings} warning(s) across ${allResults.length} file(s)`));
+    }
+    if (consistencyCount > 0) {
+      console.log(chalk.cyan(`⚡ ${consistencyCount} cross-env inconsistency issue(s)`));
+    }
   }
 }

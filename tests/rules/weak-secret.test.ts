@@ -11,8 +11,16 @@ describe('weakSecret', () => {
     expect(results.every((r) => r.severity === 'warning')).toBe(true);
   });
 
-  it('does not flag secrets with 16 or more characters', () => {
-    const env = new Map([['JWT_SECRET', 'averylongsecretkey123']]);
+  it('flags secrets with low entropy even if long enough', () => {
+    // repeating pattern — long but low entropy
+    const env = new Map([['JWT_SECRET', 'aaaaaaaaaaaaaaaaaaa']]);
+    const results = weakSecret(env, example);
+    expect(results).toHaveLength(1);
+    expect(results[0].message).toContain('entropy');
+  });
+
+  it('does not flag secrets with sufficient length and high entropy', () => {
+    const env = new Map([['JWT_SECRET', 'aB3$kP9!mZ2@qL7#xR']]);
     expect(weakSecret(env, example)).toHaveLength(0);
   });
 
