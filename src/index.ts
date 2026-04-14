@@ -9,7 +9,7 @@ const program = new Command();
 program
   .name('envguard')
   .description('Validate .env files against .env.example before your app ships')
-  .version('0.0.1')
+  .version('1.0.0')
   .option('--env <file>', 'path to .env file', '.env')
   .option('--example <file>', 'path to .env.example file', '.env.example')
   .option('--strict', 'exit with code 1 if any errors are found')
