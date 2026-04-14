@@ -1,0 +1,50 @@
+{
+  "name": "envguard",
+  "version": "0.0.1",
+  "description": "CLI tool that validates .env files against .env.example before your app ships",
+  "main": "dist/index.js",
+  "bin": {
+    "envguard": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsup --watch"
+  },
+  "keywords": [
+    "cli",
+    "dotenv",
+    "env",
+    "environment-variables",
+    "validation",
+    "devtools",
+    "typescript"
+  ],
+  "author": "Kevin Patil",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevinpatildxd/envguard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kevinpatildxd/envguard/issues"
+  },
+  "homepage": "https://github.com/kevinpatildxd/envguard#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.1.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}
