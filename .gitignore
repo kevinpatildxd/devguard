@@ -74,6 +74,9 @@ web_modules/
 # Build output
 dist/
 
+# Local test project
+test-project/
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache

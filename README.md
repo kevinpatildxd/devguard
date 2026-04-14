@@ -1,16 +1,16 @@
-# envguard
+# @kevinpatil/envguard
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![CI](https://github.com/kevinpatildxd/envguard/actions/workflows/ci.yml/badge.svg)](https://github.com/kevinpatildxd/envguard/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/envguard.svg)](https://www.npmjs.com/package/envguard)
-[![npm downloads](https://img.shields.io/npm/dm/envguard.svg)](https://www.npmjs.com/package/envguard)
+[![npm version](https://img.shields.io/npm/v/%40kevinpatil%2Fenvguard.svg)](https://www.npmjs.com/package/@kevinpatil/envguard)
+[![npm downloads](https://img.shields.io/npm/dm/%40kevinpatil%2Fenvguard.svg)](https://www.npmjs.com/package/@kevinpatil/envguard)
 
 Validate your `.env` file against `.env.example` before your app ships.
 
 Catches missing keys, insecure defaults, type mismatches, weak secrets, and more — in a single fast command.
 
 ```
-$ npx envguard
+$ npx @kevinpatil/envguard
 
 envguard — checking .env against .env.example
 
@@ -30,13 +30,13 @@ WARNINGS (2)
 ## Install
 
 ```bash
-npm install --save-dev envguard
+npm install --save-dev @kevinpatil/envguard
 ```
 
 Or run without installing:
 
 ```bash
-npx envguard
+npx @kevinpatil/envguard
 ```
 
 ---
@@ -45,19 +45,19 @@ npx envguard
 
 ```bash
 # Validate .env against .env.example in the current directory
-npx envguard
+npx @kevinpatil/envguard
 
 # Target a specific env file
-npx envguard --env .env.production
+npx @kevinpatil/envguard --env .env.production
 
 # Use a custom example file
-npx envguard --example .env.example.production
+npx @kevinpatil/envguard --example .env.example.production
 
 # Exit with code 1 if any errors are found (for CI)
-npx envguard --strict
+npx @kevinpatil/envguard --strict
 
 # Output results as JSON
-npx envguard --json
+npx @kevinpatil/envguard --json
 ```
 
 ---
@@ -85,19 +85,19 @@ Add envguard to your pipeline to block deployments with bad config:
 
 ```yaml
 - name: Validate environment variables
-  run: npx envguard --strict
+  run: npx @kevinpatil/envguard --strict
 ```
 
 ### Any CI
 
 ```bash
-npx envguard --strict  # exits with code 1 if errors are found
+npx @kevinpatil/envguard --strict  # exits with code 1 if errors are found
 ```
 
 ### JSON output for custom pipelines
 
 ```bash
-npx envguard --json | jq '.[] | select(.severity == "error")'
+npx @kevinpatil/envguard --json | jq '.[] | select(.severity == "error")'
 ```
 
 ---
