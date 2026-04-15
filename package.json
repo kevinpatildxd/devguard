@@ -1,10 +1,10 @@
 {
-  "name": "@kevinpatil/envguard",
+  "name": "@kevinpatil/devguard",
   "version": "1.1.0",
   "description": "CLI tool that validates .env files against .env.example before your app ships",
   "main": "dist/index.js",
   "bin": {
-    "envguard": "dist/index.js"
+    "devguard": "dist/index.js"
   },
   "files": [
     "dist"
@@ -28,12 +28,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kevinpatildxd/envguard.git"
+    "url": "git+https://github.com/kevinpatildxd/devguard.git"
   },
   "bugs": {
-    "url": "https://github.com/kevinpatildxd/envguard/issues"
+    "url": "https://github.com/kevinpatildxd/devguard/issues"
   },
-  "homepage": "https://github.com/kevinpatildxd/envguard#readme",
+  "homepage": "https://github.com/kevinpatildxd/devguard#readme",
   "engines": {
     "node": ">=18"
   },

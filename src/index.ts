@@ -32,7 +32,7 @@ function generateExample(envPath: string, examplePath: string): void {
 }
 
 program
-  .name('envguard')
+  .name('devguard')
   .description('Validate .env files against .env.example before your app ships')
   .version('1.1.0')
   .option('--env <file>', 'target a specific .env file (skips auto-scan)')
@@ -63,7 +63,7 @@ program
 
     if (!fs.existsSync(examplePath)) {
       console.error(`Error: '${options.example}' not found.`);
-      console.error(`Tip: Run 'npx @kevinpatil/envguard --init' to generate one from your .env`);
+      console.error(`Tip: Run 'npx @kevinpatil/devguard --init' to generate one from your .env`);
       console.error(`     Or use --example <file> to point to an existing template.`);
       process.exit(1);
     }
