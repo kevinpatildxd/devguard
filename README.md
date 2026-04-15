@@ -1,18 +1,18 @@
-# @kevinpatil/envguard
+# devguard
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI](https://github.com/kevinpatildxd/envguard/actions/workflows/ci.yml/badge.svg)](https://github.com/kevinpatildxd/envguard/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/%40kevinpatil%2Fenvguard.svg)](https://www.npmjs.com/package/@kevinpatil/envguard)
-[![npm downloads](https://img.shields.io/npm/dm/%40kevinpatil%2Fenvguard.svg)](https://www.npmjs.com/package/@kevinpatil/envguard)
+[![CI](https://github.com/kevinpatildxd/devguard/actions/workflows/test.yml/badge.svg)](https://github.com/kevinpatildxd/devguard/actions/workflows/test.yml)
+[![npm version](https://img.shields.io/npm/v/%40kevinpatil%2Fdevguard.svg)](https://www.npmjs.com/package/@kevinpatil/devguard)
+[![npm downloads](https://img.shields.io/npm/dm/%40kevinpatil%2Fdevguard.svg)](https://www.npmjs.com/package/@kevinpatil/devguard)
 
 Validate your `.env` files against `.env.example` before your app ships.
 
 Catches missing keys, insecure defaults, type mismatches, weak secrets, low-entropy secrets, cross-environment inconsistencies, and more — in a single fast command.
 
 ```
-$ npx @kevinpatil/envguard
+$ npx @kevinpatil/devguard
 
-envguard — found 2 env file(s)
+devguard — found 2 env file(s)
 
 ── .env ────────────────────────────────────
   ERRORS (2)
@@ -37,13 +37,13 @@ envguard — found 2 env file(s)
 ## Install
 
 ```bash
-npm install --save-dev @kevinpatil/envguard
+npm install --save-dev @kevinpatil/devguard
 ```
 
 Or run without installing:
 
 ```bash
-npx @kevinpatil/envguard
+npx @kevinpatil/devguard
 ```
 
 ---
@@ -52,22 +52,22 @@ npx @kevinpatil/envguard
 
 ```bash
 # Auto-scan all .env files and validate against .env.example
-npx @kevinpatil/envguard
+npx @kevinpatil/devguard
 
 # Generate .env.example from your existing .env (values blanked)
-npx @kevinpatil/envguard --init
+npx @kevinpatil/devguard --init
 
 # Target a specific env file only
-npx @kevinpatil/envguard --env .env.staging
+npx @kevinpatil/devguard --env .env.staging
 
 # Use a custom example file
-npx @kevinpatil/envguard --example .env.example.production
+npx @kevinpatil/devguard --example .env.example.production
 
 # Exit with code 1 if any errors are found (for CI)
-npx @kevinpatil/envguard --strict
+npx @kevinpatil/devguard --strict
 
 # Output results as JSON
-npx @kevinpatil/envguard --json
+npx @kevinpatil/devguard --json
 ```
 
 ---
@@ -104,7 +104,7 @@ This catches cases where a new key is added to one env file but forgotten in oth
 If your project doesn't have a `.env.example` yet:
 
 ```bash
-npx @kevinpatil/envguard --init
+npx @kevinpatil/devguard --init
 ```
 
 This generates `.env.example` from your existing `.env` with all values blanked. Commit it to your repo so teammates know what keys are required.
@@ -117,19 +117,19 @@ This generates `.env.example` from your existing `.env` with all values blanked.
 
 ```yaml
 - name: Validate environment variables
-  run: npx @kevinpatil/envguard --strict
+  run: npx @kevinpatil/devguard --strict
 ```
 
 ### Any CI
 
 ```bash
-npx @kevinpatil/envguard --strict  # exits with code 1 if errors are found
+npx @kevinpatil/devguard --strict  # exits with code 1 if errors are found
 ```
 
 ### JSON output for custom pipelines
 
 ```bash
-npx @kevinpatil/envguard --json | jq '.files[].results[] | select(.severity == "error")'
+npx @kevinpatil/devguard --json | jq '.files[].results[] | select(.severity == "error")'
 ```
 
 ---

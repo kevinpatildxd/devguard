@@ -60,7 +60,7 @@ export function reportMulti(
     (sum, { results }) => sum + results.filter((r) => r.severity === 'warning').length, 0
   );
 
-  console.log(chalk.bold(`\nenvguard — found ${allResults.length} env file(s)\n`));
+  console.log(chalk.bold(`\ndevguard — found ${allResults.length} env file(s)\n`));
 
   // per-file reports
   for (const { file, results } of allResults) {
