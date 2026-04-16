@@ -3,7 +3,9 @@ import path        from 'path';
 import { Command } from 'commander';
 import { runEnv }          from './modules/env';
 import { runDeps }         from './modules/deps';
-import { runReactImports } from './modules/react/imports';
+import { runReactImports }   from './modules/react/imports';
+import { runReactRerenders } from './modules/react/rerenders';
+import { runReactHooks }     from './modules/react/hooks';
 import { printBuddy }   from './buddy';
 import { printSummary } from './reporter';
 
@@ -90,10 +92,28 @@ program
   });
 
 program
+  .command('react:rerenders')
+  .description('Detect inline objects/functions in JSX props and missing React.memo')
+  .option('--json', 'output results as JSON')
+  .action((opts) => {
+    runReactRerenders({ json: !!opts.json });
+  });
+
+program
+  .command('react:hooks')
+  .description('Lint React hooks rule violations — conditional, loop, nested function, invalid caller')
+  .option('--json', 'output results as JSON')
+  .action((opts) => {
+    runReactHooks({ json: !!opts.json });
+  });
+
+program
   .command('react')
-  .description('Audit React code quality — imports, rerenders, hooks, bundle, a11y, server components')
+  .description('Run all React checks — imports, rerenders, hooks')
   .option('--entry <file>', 'entry point file (e.g. src/main.tsx)')
   .option('--json', 'output results as JSON')
   .action((opts) => {
     runReactImports({ entry: opts.entry, json: !!opts.json });
+    runReactRerenders({ json: !!opts.json });
+    runReactHooks({ json: !!opts.json });
   });
