@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>devguard — One command to guard your project</title>
+  <meta name="description" content="Validates env files, audits dependencies, and checks React code quality — all in one fast CLI. No config files. No API keys. Works offline." />
+  <meta property="og:title" content="devguard — One command to guard your project" />
+  <meta property="og:description" content="Validates env files, audits dependencies, and checks React code quality — all in one fast CLI." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Particle canvas -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="nav-logo-icon">🛡️</span>
+        <span class="nav-logo-text">devguard</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#modules">Modules</a>
+        <a href="#install">Install</a>
+        <a href="https://github.com/kevinpatildxd/devguard" target="_blank" rel="noopener" class="nav-github">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.004 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="container">
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        v2.0.0 — now with React a11y &amp; RSC checks
+      </div>
+      <h1 class="hero-title reveal">
+        One command to<br />
+        <span class="gradient-text">guard your project</span>
+      </h1>
+      <p class="hero-sub reveal">
+        Validates env files, audits dependencies, and checks React code quality —<br />
+        all in one fast CLI. No config files. No API keys. Works offline, in Docker, everywhere.
+      </p>
+      <div class="hero-actions reveal">
+        <div class="install-box" id="installBox">
+          <span class="install-prefix">$</span>
+          <span class="install-cmd" id="installCmd">npx @kevinpatil/devguard</span>
+          <button class="copy-btn" id="copyBtn" title="Copy to clipboard">
+            <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </div>
+        <a href="https://github.com/kevinpatildxd/devguard" target="_blank" rel="noopener" class="btn-secondary">
+          View on GitHub
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+      <!-- Terminal demo -->
+      <div class="terminal-wrap reveal">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+            <span class="terminal-title">devguard — bash</span>
+          </div>
+          <div class="terminal-body" id="terminalBody">
+            <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">npx @kevinpatil/devguard</span></div>
+            <div class="term-output" id="termOutput"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid reveal">
+        <div class="stat-card">
+          <div class="stat-number" data-target="8">0</div>
+          <div class="stat-label">Env validation rules</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="4">0</div>
+          <div class="stat-label">Dep audit checks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="6">0</div>
+          <div class="stat-label">React audit modules</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="0" data-text="0">0</div>
+          <div class="stat-label">API keys needed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Why devguard</span>
+        <h2 class="section-title">Replace five tools with one</h2>
+        <p class="section-sub">Stop juggling depcheck, npm-check, npm audit, ESLint, and manual .env reviews. One command covers all of it.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon">🔑</div>
+          <h3>Env Validation</h3>
+          <p>Catches missing keys, insecure defaults, type mismatches, weak secrets, and cross-env inconsistencies before your app ships.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">📦</div>
+          <h3>Dep Auditing</h3>
+          <p>Finds unused packages, outdated versions, real CVEs via OSV.dev, and suggests lightweight alternatives with size savings.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">⚛️</div>
+          <h3>React Analysis</h3>
+          <p>Dead imports, re-render risks, hooks rule violations, bundle size, accessibility issues, and RSC boundary bugs — all static, no browser needed.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">🚀</div>
+          <h3>CI Ready</h3>
+          <p>Exit with code 1 on errors via <code>--strict</code>. JSON output for custom pipelines. Works in Docker, GitHub Actions, any CI.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">📡</div>
+          <h3>Works Offline</h3>
+          <p>Local disk cache at <code>~/.devguard/cache.json</code> with 24hr TTL. Repeated runs are near-instant and fully offline-friendly.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">⚡</div>
+          <h3>Zero Config</h3>
+          <p>No config files, no API keys, no setup. Run <code>npx @kevinpatil/devguard</code> in any project and get a full report in seconds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modules -->
+  <section class="modules" id="modules">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Modules</span>
+        <h2 class="section-title">Every check, one tool</h2>
+      </div>
+
+      <div class="modules-tabs reveal">
+        <button class="tab active" data-tab="env">env</button>
+        <button class="tab" data-tab="deps">deps</button>
+        <button class="tab" data-tab="react">react</button>
+      </div>
+
+      <div class="module-panel active" id="tab-env">
+        <div class="module-grid">
+          <div class="module-info">
+            <h3 class="module-name"><span class="cmd-prefix">devguard</span> env</h3>
+            <p>Validates all your <code>.env</code> files against <code>.env.example</code>. Catches config bugs before they hit production.</p>
+            <ul class="rule-list">
+              <li><span class="badge err">ERROR</span> Missing required key</li>
+              <li><span class="badge err">ERROR</span> Empty value</li>
+              <li><span class="badge err">ERROR</span> Insecure placeholder (<code>changeme</code>, <code>secret</code>)</li>
+              <li><span class="badge warn">WARN</span> Undeclared key</li>
+              <li><span class="badge warn">WARN</span> Type mismatch (PORT should be a number)</li>
+              <li><span class="badge warn">WARN</span> Malformed URL</li>
+              <li><span class="badge warn">WARN</span> Weak secret length</li>
+              <li><span class="badge warn">WARN</span> Boolean mismatch</li>
+            </ul>
+            <div class="module-cmd">
+              <code>npx @kevinpatil/devguard env</code>
+            </div>
+          </div>
+          <div class="module-terminal">
+            <div class="terminal small">
+              <div class="terminal-bar">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <div class="terminal-body">
+                <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">devguard env</span></div>
+                <br/>
+                <div class="term-line t-dim">── .env ──────────────────────</div>
+                <div class="term-line"><span class="t-red">  ✗</span> <span class="t-white">DATABASE_URL</span> <span class="t-dim">— Missing required key</span></div>
+                <div class="term-line"><span class="t-red">  ✗</span> <span class="t-white">JWT_SECRET</span> <span class="t-dim">— Insecure value: 'secret'</span></div>
+                <div class="term-line"><span class="t-yellow">  ⚠</span> <span class="t-white">PORT</span> <span class="t-dim">— Expected number, got 'abc'</span></div>
+                <div class="term-line"><span class="t-yellow">  ⚠</span> <span class="t-white">STRIPE_KEY</span> <span class="t-dim">— Not in .env.example</span></div>
+                <br/>
+                <div class="term-line t-dim">── .env.staging ──────────────</div>
+                <div class="term-line"><span class="t-green">  ✔</span> <span class="t-dim">All checks passed</span></div>
+                <br/>
+                <div class="term-line"><span class="t-red">✗ 2 error(s)</span> <span class="t-dim">across 2 file(s)</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module-panel" id="tab-deps">
+        <div class="module-grid">
+          <div class="module-info">
+            <h3 class="module-name"><span class="cmd-prefix">devguard</span> deps</h3>
+            <p>Full dependency health audit. Unused packages, outdated versions, real CVEs, and lighter alternatives.</p>
+            <ul class="rule-list">
+              <li><span class="badge err">CHECK</span> Unused package detection (AST-based)</li>
+              <li><span class="badge err">CHECK</span> Outdated version scanner (npm Registry)</li>
+              <li><span class="badge err">CHECK</span> Vulnerability audit (OSV.dev, free)</li>
+              <li><span class="badge warn">INFO</span> Lightweight alternative suggestions</li>
+            </ul>
+            <div class="module-cmd">
+              <code>npx @kevinpatil/devguard deps</code>
+            </div>
+          </div>
+          <div class="module-terminal">
+            <div class="terminal small">
+              <div class="terminal-bar">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <div class="terminal-body">
+                <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">devguard deps</span></div>
+                <br/>
+                <div class="term-line t-dim">── UNUSED (2) ────────────────</div>
+                <div class="term-line"><span class="t-red">  ✗</span> <span class="t-white">moment</span> <span class="t-dim">— imported nowhere</span></div>
+                <div class="term-line"><span class="t-red">  ✗</span> <span class="t-white">lodash</span> <span class="t-dim">— imported nowhere</span></div>
+                <br/>
+                <div class="term-line t-dim">── OUTDATED (1) ──────────────</div>
+                <div class="term-line"><span class="t-yellow">  ⚠</span> <span class="t-white">axios</span> <span class="t-dim">0.27.0 → 1.7.2</span></div>
+                <br/>
+                <div class="term-line t-dim">── VULNERABILITIES (1) ───────</div>
+                <div class="term-line"><span class="t-red">  ✗</span> <span class="t-white">express@4.18.0</span> <span class="t-red">CVE-2024-29041</span></div>
+                <br/>
+                <div class="term-line t-dim">── ALTERNATIVES ──────────────</div>
+                <div class="term-line"><span class="t-blue">  ⚡</span> <span class="t-white">moment</span> <span class="t-dim">→ dayjs saves 65KB</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module-panel" id="tab-react">
+        <div class="module-grid">
+          <div class="module-info">
+            <h3 class="module-name"><span class="cmd-prefix">devguard</span> react</h3>
+            <p>Six React audit checks — all static analysis, no browser, no runtime. Works on any React or Next.js project.</p>
+            <ul class="rule-list">
+              <li><span class="badge info">react:imports</span> Dead components &amp; unused imports</li>
+              <li><span class="badge info">react:rerenders</span> Inline objects, arrow fns in JSX</li>
+              <li><span class="badge info">react:hooks</span> Rules of hooks violations</li>
+              <li><span class="badge info">react:bundle</span> Heavy packages &amp; alternatives</li>
+              <li><span class="badge info">react:a11y</span> Accessibility static scan</li>
+              <li><span class="badge info">react:server</span> RSC boundary violations</li>
+            </ul>
+            <div class="module-cmd">
+              <code>npx @kevinpatil/devguard react</code>
+            </div>
+          </div>
+          <div class="module-terminal">
+            <div class="terminal small">
+              <div class="terminal-bar">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <div class="terminal-body">
+                <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">devguard react</span></div>
+                <br/>
+                <div class="term-line t-dim">── IMPORTS ───────────────────</div>
+                <div class="term-line"><span class="t-red">  ✗</span> <span class="t-white">OldModal.tsx</span> <span class="t-dim">— dead component</span></div>
+                <br/>
+                <div class="term-line t-dim">── RERENDERS ─────────────────</div>
+                <div class="term-line"><span class="t-yellow">  ⚠</span> <span class="t-white">Home.tsx:42</span> <span class="t-dim">— inline object prop</span></div>
+                <br/>
+                <div class="term-line t-dim">── HOOKS ─────────────────────</div>
+                <div class="term-line"><span class="t-red">  ✗</span> <span class="t-white">Form.tsx:31</span> <span class="t-dim">— hook inside if block</span></div>
+                <br/>
+                <div class="term-line t-dim">── A11Y ──────────────────────</div>
+                <div class="term-line"><span class="t-red">  ✗</span> <span class="t-white">Avatar.tsx:12</span> <span class="t-dim">— img missing alt</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CI section -->
+  <section class="ci-section">
+    <div class="container">
+      <div class="ci-grid">
+        <div class="ci-content reveal">
+          <span class="section-tag">CI Integration</span>
+          <h2>Ship with confidence</h2>
+          <p>Add devguard to your pipeline in one line. Exits with code 1 on any error so broken builds never reach production.</p>
+          <div class="ci-badges">
+            <span class="ci-badge">GitHub Actions</span>
+            <span class="ci-badge">GitLab CI</span>
+            <span class="ci-badge">CircleCI</span>
+            <span class="ci-badge">Docker</span>
+            <span class="ci-badge">Any CI</span>
+          </div>
+        </div>
+        <div class="ci-terminal reveal">
+          <div class="terminal">
+            <div class="terminal-bar">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+              <span class="terminal-title">github-actions.yml</span>
+            </div>
+            <div class="terminal-body yaml">
+<span class="t-dim">- name:</span> <span class="t-green">Run devguard</span>
+  <span class="t-dim">run:</span> <span class="t-white">npx @kevinpatil/devguard --strict</span>
+
+<span class="t-dim"># JSON output for custom pipelines</span>
+<span class="t-dim">- name:</span> <span class="t-green">Guard (JSON)</span>
+  <span class="t-dim">run:</span> <span class="t-white">npx @kevinpatil/devguard --json \</span>
+         <span class="t-dim">| jq '.files[].issues[]'</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Install -->
+  <section class="install-section" id="install">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Get Started</span>
+        <h2 class="section-title">Up in seconds</h2>
+      </div>
+
+      <div class="install-cards reveal">
+        <div class="install-card">
+          <div class="install-card-num">01</div>
+          <h3>No install needed</h3>
+          <p>Run instantly with npx. No global install, no setup, no config file.</p>
+          <div class="code-block">
+            <span class="term-prompt">$</span> npx @kevinpatil/devguard
+          </div>
+        </div>
+        <div class="install-card">
+          <div class="install-card-num">02</div>
+          <h3>Or add as dev dep</h3>
+          <p>Install once, run as a script. Pairs perfectly with pre-commit hooks.</p>
+          <div class="code-block">
+            <span class="term-prompt">$</span> npm i -D @kevinpatil/devguard
+          </div>
+        </div>
+        <div class="install-card">
+          <div class="install-card-num">03</div>
+          <h3>Run specific checks</h3>
+          <p>Target exactly what you need. Every module works standalone.</p>
+          <div class="code-block">
+            <span class="term-prompt">$</span> npx @kevinpatil/devguard env
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="nav-logo-icon">🛡️</span>
+          <span class="footer-name">devguard</span>
+          <span class="footer-ver">v2.0.0</span>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/kevinpatildxd/devguard" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.npmjs.com/package/@kevinpatil/devguard" target="_blank" rel="noopener">npm</a>
+          <a href="https://github.com/kevinpatildxd/devguard/issues" target="_blank" rel="noopener">Issues</a>
+          <a href="https://github.com/kevinpatildxd/devguard/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contribute</a>
+        </div>
+        <p class="footer-copy">MIT © <a href="https://github.com/kevinpatildxd" target="_blank" rel="noopener">Kevin Patil</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
