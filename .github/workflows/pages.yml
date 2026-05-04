@@ -1,37 +1,27 @@
-name: Deploy website
+name: Guard & Deploy website
 
 on:
   push:
     branches: [main]
-    paths: [docs/**]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
-
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  guard-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          path: docs
+          node-version: 20
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Run devguard checks
+        run: npx @kevinpatil/devguard --strict
+        continue-on-error: true
+
+      - name: Deploy website to Netlify
+        run: npx netlify-cli deploy --dir=docs --prod --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} --site=${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Print live URL
+        run: echo "✅ Site live at https://kevinpatildxd-devguard.netlify.app"
