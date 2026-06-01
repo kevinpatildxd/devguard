@@ -11,6 +11,8 @@ One command to guard your project before it ships.
 
 Validates env files, audits dependencies, and checks React code quality — all in one fast CLI. No config files. No API keys. Works offline, in Docker, everywhere.
 
+![devguard demo](./demo.gif)
+
 ---
 
 ## What it checks
