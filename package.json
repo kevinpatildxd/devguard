@@ -1,6 +1,6 @@
 {
   "name": "@kevinpatil/devguard",
-  "version": "3.4.0",
+  "version": "3.4.1-test.0",
   "description": "CLI tool that audits env files, dependencies, and React code quality before your app ships",
   "main": "dist/index.js",
   "bin": {
