@@ -2,6 +2,10 @@
 
 All notable changes to devguard are documented here.
 
+## [Unreleased]
+### Fixed
+- Flags given after a subcommand (`devguard env --strict`, `devguard deps --json`, …) were taken by the root command and ignored, so `env --strict` never failed CI on env errors
+
 ## [3.4.2] — 2026-09-30
 ### Fixed
 - `deps`: vulnerability and outdated checks now use the installed version (`node_modules` → `package-lock.json`) instead of the lowest version in the `package.json` range, removing false-positive vulnerability reports

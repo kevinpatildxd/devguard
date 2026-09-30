@@ -32,6 +32,9 @@ program
   .name('devguard')
   .description('Guard your project — env, deps, and React code quality in one command')
   .version(readPkgVersion())
+  // root and subcommands share --json/--strict; without this the root swallows
+  // them, so `devguard env --strict` would never see its own flag
+  .enablePositionalOptions()
   .option('--json',   'output results as JSON')
   .option('--strict', 'exit with code 1 if any errors are found')
   .option('--score',  'print health score only, no detail output')
