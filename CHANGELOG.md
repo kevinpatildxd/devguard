@@ -2,11 +2,30 @@
 
 All notable changes to devguard are documented here.
 
-## [Unreleased]
+## [3.4.2] — 2026-09-30
 ### Fixed
 - `deps`: vulnerability and outdated checks now use the installed version (`node_modules` → `package-lock.json`) instead of the lowest version in the `package.json` range, removing false-positive vulnerability reports
 
-## [3.3.0] — 2026-04-xx
+## [3.4.1] — 2026-07-14
+### Changed
+- Releases are now published from CI via npm trusted publishing (OIDC) with provenance; prereleases go to the `next` dist-tag
+- Removed a duplicate, unused copy of the env rules from the package source
+
+## [3.4.0] — 2026-05-14
+### Added
+- `devguard react --no-memo`: skip the missing `React.memo` check
+- `deps --duplicates` now reads `pnpm-lock.yaml` and `yarn.lock` as well as `package-lock.json`
+### Fixed
+- npm registry calls run in batches, so large projects no longer fire hundreds of requests at once
+- The CLI version is read from `package.json` instead of a hard-coded string
+- Bundlephobia lookups time out instead of hanging
+
+## [3.3.1] — 2026-05-12
+### Fixed
+- `devguard react` now includes the secrets check
+- Corrected the reported version string and the CI badge URL
+
+## [3.3.0] — 2026-05-12
 ### Added
 - `devguard env --schema`: generate `env.schema.ts` with Zod types inferred from `.env.example`
 - `devguard init --hooks`: install a pre-commit hook that runs `devguard --strict`

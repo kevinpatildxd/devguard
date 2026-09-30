@@ -289,7 +289,7 @@ CI fails automatically if devguard finds any errors. Customize with inputs:
   with:
     command: env          # run only env checks
     strict: true          # fail on errors (default)
-    version: '2.1.0'      # pin a specific devguard version
+    version: '3.4.2'      # pin a specific devguard version (default: latest)
 ```
 
 See [devguard-action](https://github.com/kevinpatildxd/devguard-action) for the full input/output reference.
