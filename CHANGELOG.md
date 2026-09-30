@@ -2,9 +2,11 @@
 
 All notable changes to devguard are documented here.
 
-## [Unreleased]
+## [3.4.3] — 2026-09-30
 ### Fixed
 - Flags given after a subcommand (`devguard env --strict`, `devguard deps --json`, …) were taken by the root command and ignored, so `env --strict` never failed CI on env errors
+### Changed
+- Dev toolchain: vitest 5, TypeScript 7; CI now also runs the built CLI on Node 18, 20, 22 and 24
 
 ## [3.4.2] — 2026-09-30
 ### Fixed
