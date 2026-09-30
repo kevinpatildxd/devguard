@@ -13,8 +13,36 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           cache: npm
       - run: npm ci
       - run: npx tsc --noEmit
       - run: npm test
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+  # The dev toolchain needs Node 22+, but the published CLI supports Node 18+ (engines).
+  # Run the built CLI on every supported runtime to catch newer-Node APIs sneaking in.
+  smoke:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - run: npm ci --omit=dev
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - run: node dist/index.js --version
+      - run: node dist/index.js env --example tests/fixtures/complete.env.example --file tests/fixtures/complete.env
+      - run: node dist/index.js react --json > /dev/null
