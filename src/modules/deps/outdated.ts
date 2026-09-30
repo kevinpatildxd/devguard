@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { httpGet } from '../../utils/httpClient';
 import { DepsIssue } from '../../types';
+import { createVersionResolver } from './installedVersion';
 
 async function batchSettled<T, R>(
   items: T[],
@@ -15,10 +16,6 @@ async function batchSettled<T, R>(
     results.push(...chunkResults);
   }
   return results;
-}
-
-function stripRange(version: string): string {
-  return version.replace(/^[\^~>=<]+/, '').trim();
 }
 
 function isOutdated(current: string, latest: string): boolean {
@@ -46,11 +43,12 @@ export async function findOutdatedPackages(cwd: string): Promise<DepsIssue[]> {
   } as Record<string, string>;
 
   const entries = Object.entries(deps).filter(([, v]) => !v.startsWith('file:') && !v.startsWith('git'));
+  const resolveVersion = createVersionResolver(cwd);
 
   const results = await batchSettled(
     entries,
     async ([name, range]) => {
-      const current = stripRange(range);
+      const current = resolveVersion(name, range);
       const data    = await httpGet<NpmLatest>(`https://registry.npmjs.org/${name}/latest`);
       return { name, current, latest: data.version };
     },

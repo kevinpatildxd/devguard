@@ -2,10 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { httpPost } from '../../utils/httpClient';
 import { DepsIssue } from '../../types';
-
-function stripRange(version: string): string {
-  return version.replace(/^[\^~>=<]+/, '').trim();
-}
+import { createVersionResolver } from './installedVersion';
 
 interface OsvVuln {
   id:      string;
@@ -45,9 +42,12 @@ export async function findVulnerablePackages(cwd: string): Promise<DepsIssue[]> 
   const entries = Object.entries(deps).filter(([, v]) => !v.startsWith('file:'));
   if (entries.length === 0) return [];
 
-  const queries = entries.map(([name, range]) => ({
+  const resolveVersion = createVersionResolver(cwd);
+  const versions = entries.map(([name, range]) => resolveVersion(name, range));
+
+  const queries = entries.map(([name], i) => ({
     package: { name, ecosystem: 'npm' },
-    version: stripRange(range),
+    version: versions[i],
   }));
 
   let response: OsvBatchResponse;
@@ -62,7 +62,7 @@ export async function findVulnerablePackages(cwd: string): Promise<DepsIssue[]> 
 
   const issues: DepsIssue[] = [];
   for (let i = 0; i < entries.length; i++) {
-    const [name, range] = entries[i];
+    const [name] = entries[i];
     const result        = response.results[i];
     if (!result?.vulns?.length) continue;
 
@@ -70,7 +70,7 @@ export async function findVulnerablePackages(cwd: string): Promise<DepsIssue[]> 
       issues.push({
         type:     'vulnerable',
         severity: 'error',
-        name:     `${name}@${stripRange(range)}`,
+        name:     `${name}@${versions[i]}`,
         message:  `${cveId(vuln)}  ${severity(vuln)}`,
       });
     }
