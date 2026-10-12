@@ -219,6 +219,18 @@ h1{font-size:clamp(40px,5vw,68px);font-weight:900;line-height:1.08;letter-spacin
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,rgba(34,197,94,.2),rgba(168,85,247,.12),transparent);
 }
+#claude{
+  padding:100px 0;
+  background:#07080c;
+  position:relative;
+}
+#claude::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(168,85,247,.18),rgba(34,197,94,.14),transparent);
+}
+.claude-cmds{list-style:none;margin:24px 0 0;display:grid;gap:10px}
+.claude-cmds li{display:flex;gap:12px;align-items:baseline;font-size:14px;color:var(--muted);line-height:1.6}
+.claude-cmds code{font-family:var(--font-mono);font-size:12.5px;color:var(--green);white-space:nowrap}
 #install{
   padding:100px 0;
   background:#07080c;
@@ -509,6 +521,7 @@ footer{padding:40px 0;border-top:1px solid var(--border)}
   <div class="nav-links">
     <a href="#features">Features</a>
     <a href="#modules">Modules</a>
+    <a href="#claude">Claude Plugin</a>
     <a href="#install">Install</a>
     <a href="https://github.com/kevinpatildxd/devguard" target="_blank" rel="noopener" class="btn-gh">GitHub ↗</a>
   </div>
@@ -522,6 +535,7 @@ footer{padding:40px 0;border-top:1px solid var(--border)}
 <div class="drawer" id="drawer" aria-hidden="true">
   <a href="#features" onclick="closeDrawer()">Features</a>
   <a href="#modules" onclick="closeDrawer()">Modules</a>
+  <a href="#claude" onclick="closeDrawer()">Claude Plugin</a>
   <a href="#install" onclick="closeDrawer()">Install</a>
   <a href="https://github.com/kevinpatildxd/devguard" target="_blank" rel="noopener" onclick="closeDrawer()">GitHub ↗</a>
 </div>
@@ -878,6 +892,39 @@ footer{padding:40px 0;border-top:1px solid var(--border)}
   </div>
 </section>
 
+<!-- CLAUDE CODE PLUGIN -->
+<section id="claude">
+  <div class="container">
+    <div class="ci-layout">
+      <div class="reveal">
+        <div class="section-tag">Claude Code Plugin</div>
+        <h2 style="font-size:clamp(26px,3.5vw,40px);font-weight:800;letter-spacing:-.03em;margin:16px 0 12px;text-wrap:balance">Find it. Then let Claude fix it.</h2>
+        <p style="color:var(--muted);line-height:1.7">Install devguard as a Claude Code plugin. Claude runs the checks, explains what it found, and fixes the findings you approve. It also scans every JS/TS file Claude edits for hardcoded secrets.</p>
+        <ul class="claude-cmds">
+          <li><code>/devguard:audit</code><span>Run every check that applies to your project</span></li>
+          <li><code>/devguard:env</code><span>Validate .env files against .env.example</span></li>
+          <li><code>/devguard:deps</code><span>Unused, outdated and vulnerable packages</span></li>
+          <li><code>/devguard:react</code><span>Hooks, re-renders, a11y, bundle, server boundaries</span></li>
+          <li><code>/devguard:secrets</code><span>Hardcoded keys and credentials</span></li>
+        </ul>
+      </div>
+      <div class="code-block reveal" style="transition-delay:.1s">
+        <div class="code-block-header">
+          <span class="code-lang">CLAUDE CODE</span>
+          <button class="copy-btn" id="copy-plugin" aria-label="Copy plugin install command" title="Copy" style="border:none;background:none;cursor:pointer;color:var(--muted);transition:color .2s;padding:0" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg>
+          </button>
+        </div>
+        <pre aria-label="Claude Code plugin install commands" style="white-space:pre-wrap;overflow-wrap:anywhere"><span class="cmt"># Install the plugin (inside Claude Code)</span>
+<span class="val">/plugin install devguard --marketplace kevinpatildxd/devguard</span>
+
+<span class="cmt"># Audit the project and fix what it finds</span>
+<span class="val">/devguard:audit</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- GET STARTED -->
 <section id="install">
   <div class="container">
@@ -1228,6 +1275,15 @@ function setupCopy(btnId, text) {
 }
 setupCopy('copy-hero','npx @kevinpatil/devguard');
 setupCopy('copy-cta','npx @kevinpatil/devguard');
+const pluginBtn = document.getElementById('copy-plugin');
+if(pluginBtn){
+  pluginBtn.addEventListener('click',()=>{
+    navigator.clipboard.writeText('/plugin install devguard --marketplace kevinpatildxd/devguard').then(()=>{
+      pluginBtn.style.color='var(--green)';
+      setTimeout(()=>{ pluginBtn.style.color=''; },2000);
+    });
+  });
+}
 const yamlBtn = document.getElementById('copy-yaml');
 if(yamlBtn){
   yamlBtn.addEventListener('click',()=>{

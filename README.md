@@ -45,6 +45,37 @@ npx @kevinpatil/devguard
 
 ---
 
+## Claude Code plugin
+
+devguard also ships as a [Claude Code](https://claude.com/claude-code) plugin: Claude runs the checks, explains the findings, and fixes the ones you approve.
+
+Install it from inside Claude Code:
+
+```
+/plugin install devguard --marketplace kevinpatildxd/devguard
+```
+
+On Claude Code older than 2.1.275, use two steps:
+
+```
+/plugin marketplace add kevinpatildxd/devguard
+/plugin install devguard@devguard
+```
+
+| Command | What it does |
+|---|---|
+| `/devguard:audit` | Runs every check that applies to the project and offers fixes |
+| `/devguard:env` | Validates `.env` files against `.env.example` |
+| `/devguard:deps` | Audits dependencies — unused, outdated, vulnerable, licenses, supply chain |
+| `/devguard:react` | Runs the React checks |
+| `/devguard:secrets` | Scans JS/TS source for hardcoded secrets |
+
+The plugin also adds a hook: after Claude edits a JS/TS file, devguard scans it for hardcoded secrets and tells Claude if one was introduced. The hook is quick when devguard is installed in the project and takes a few seconds per edit when it has to go through `npx`. Set `DEVGUARD_HOOK=off` to turn it off.
+
+The plugin calls the CLI through `npx` (or your project's local install), so Node 18+ is required. Its source is in [`plugin/`](plugin).
+
+---
+
 ## Usage
 
 ```bash

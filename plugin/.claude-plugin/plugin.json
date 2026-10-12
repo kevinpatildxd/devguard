@@ -1,0 +1,13 @@
+{
+  "name": "devguard",
+  "version": "1.0.0",
+  "description": "Audit env files, dependencies, React code quality, and hardcoded secrets with devguard, then fix the findings with Claude.",
+  "author": {
+    "name": "Kevin Patil",
+    "url": "https://github.com/kevinpatildxd"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/kevinpatildxd/devguard#claude-code-plugin",
+  "repository": "https://github.com/kevinpatildxd/devguard",
+  "keywords": ["env", "dotenv", "dependencies", "react", "secrets", "audit", "security"]
+}

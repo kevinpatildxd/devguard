@@ -2,6 +2,10 @@
 
 All notable changes to devguard are documented here.
 
+## [Unreleased]
+### Added
+- Claude Code plugin (`plugin/`, installable with `/plugin install devguard --marketplace kevinpatildxd/devguard`): `/devguard:audit`, `/devguard:env`, `/devguard:deps`, `/devguard:react` and `/devguard:secrets` skills, plus a hook that scans edited JS/TS files for hardcoded secrets
+
 ## [3.4.3] — 2026-09-30
 ### Fixed
 - Flags given after a subcommand (`devguard env --strict`, `devguard deps --json`, …) were taken by the root command and ignored, so `env --strict` never failed CI on env errors

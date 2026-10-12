@@ -1,0 +1,17 @@
+{
+  "description": "After Claude edits a JS/TS file, scan it with devguard for hardcoded secrets and tell Claude if any were introduced.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/secrets-check.js\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
