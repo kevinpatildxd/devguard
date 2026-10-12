@@ -21,7 +21,7 @@ jobs:
         continue-on-error: true
 
       - name: Deploy website to Netlify
-        run: npx netlify-cli deploy --dir=docs --prod --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} --site=${{ secrets.NETLIFY_SITE_ID }}
+        run: npx netlify-cli deploy --no-build --dir=docs --prod --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} --site=${{ secrets.NETLIFY_SITE_ID }}
 
       - name: Print live URL
         run: echo "✅ Site live at https://kevinpatildxd-devguard.netlify.app"
